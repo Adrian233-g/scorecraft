@@ -53,8 +53,45 @@ Abrir en el navegador: `http://localhost:8080`
 
 ---
 
-## 🔮 Fase 2: `scorecraft-microservices` (Próximamente)
+## 🔮 Fase 2: `scorecraft-microservices` (Arquitectura en Microservicios)
 
-* **Servicios Desacoplados:** Teams Service, Matches Service, Standings Service, API Gateway.
-* **Frontend:** Single Page Application (React / Next.js).
-* **Comunicación:** REST APIs / Mensajería asíncrona.
+### Stack Tecnológico
+* **Microservicios Backend:** Java 25 + Spring Boot 4.1
+  * **`api-gateway` (Puerto 8080):** Reverse Proxy y CORS centralizado.
+  * **`team-service` (Puerto 8081):** CRUD de equipos y persistencia en `ScoreCraft_Teams`.
+  * **`match-service` (Puerto 8082):** Fixture, resultados y persistencia en `ScoreCraft_Matches`.
+  * **`standing-service` (Puerto 8083):** Servicio agregador que calcula la tabla de posiciones en tiempo real comunicándose con `match-service` y `team-service` vía `RestClient`.
+* **Frontend Desacoplado:** React 19 + Vite + Tailwind CSS + Lucide Icons (Gestionado con **`pnpm`**, Puerto 5173).
+* **Persistencia:** Microsoft SQL Server 2022 (*Database-per-Service Pattern*).
+
+### Ejecución de los Microservicios
+
+1. **Iniciar todos los microservicios backend:**
+   ```bash
+   ./scorecraft-microservices/start-all.sh
+   ```
+
+2. **Iniciar la SPA en React (Frontend):**
+   ```bash
+   cd scorecraft-microservices/frontend
+   pnpm dev
+   ```
+   Abrir en el navegador: `http://localhost:5173`
+
+3. **Para detener los microservicios:**
+   ```bash
+   ./scorecraft-microservices/stop-all.sh
+   ```
+
+---
+
+## 📊 Comparativa de Arquitecturas
+
+| Característica | Fase 1: Monolito en Capas (`scorecraft-layers`) | Fase 2: Microservicios (`scorecraft-microservices`) |
+| :--- | :--- | :--- |
+| **Despliegue** | 1 unidad monolítica (`.jar`) | 4 servicios independientes + 1 SPA |
+| **Frontend** | SSR con Thymeleaf | SPA desacoplada con React + Vite (`pnpm`) |
+| **Base de Datos** | Base de datos única (`ScoreCraftLayers`) | Base de datos por servicio (`ScoreCraft_Teams`, `ScoreCraft_Matches`) |
+| **Comunicación** | Llamadas internas en memoria (Java Services) | REST APIs sobre HTTP vía API Gateway y `RestClient` |
+| **Escalabilidad** | Escalado vertical / Monolito completo | Escalado horizontal granular por microservicio |
+
