@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::main-content}, ~{::title})}">
+<head>
+    <title th:text="${isEdit ? 'Editar Equipo - ScoreCraft' : 'Nuevo Equipo - ScoreCraft'}">Equipo</title>
+</head>
+<body>
+<div th:fragment="main-content" class="max-w-2xl mx-auto space-y-6">
+
+    <!-- Header Section -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-extrabold text-white flex items-center gap-2">
+                <span th:text="${isEdit ? '✏️ Editar Equipo' : '🛡️ Registrar Nuevo Equipo'}">Registro</span>
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Completa los datos del club para agregarlo a la tabla y fixture</p>
+        </div>
+        <a th:href="@{/teams}" class="text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 px-3 py-2 rounded-xl transition-all">
+            &larr; Volver al listado
+        </a>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <form th:action="@{/teams/save}" th:object="${team}" method="post" class="space-y-6">
+            <!-- Hidden ID for Edit -->
+            <input type="hidden" th:field="*{id}"/>
+
+            <!-- Row 1: Name & Short Name -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Nombre del Club *</label>
+                    <input type="text" th:field="*{name}" placeholder="Ej. Real Madrid, Alianza Lima..."
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"/>
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-xs text-rose-400 mt-1"></p>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Abreviatura *</label>
+                    <input type="text" th:field="*{shortName}" maxlength="5" placeholder="Ej. RMA"
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white uppercase placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm font-mono"/>
+                    <p th:if="${#fields.hasErrors('shortName')}" th:errors="*{shortName}" class="text-xs text-rose-400 mt-1"></p>
+                </div>
+            </div>
+
+            <!-- Row 2: City & Stadium -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Ciudad Sede</label>
+                    <input type="text" th:field="*{city}" placeholder="Ej. Madrid, Lima..."
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Estadio</label>
+                    <input type="text" th:field="*{stadium}" placeholder="Ej. Santiago Bernabéu..."
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"/>
+                </div>
+            </div>
+
+            <!-- Row 3: Logo URL & Color -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">URL del Escudo / Logo</label>
+                    <input type="url" th:field="*{logoUrl}" id="logoInput" placeholder="https://..."
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Color Principal</label>
+                    <div class="flex items-center gap-2">
+                        <input type="color" th:field="*{primaryColor}"
+                               class="h-10 w-14 rounded-lg bg-slate-950 border border-slate-700 cursor-pointer"/>
+                        <span class="text-xs text-slate-400 font-mono">Personalizar</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit buttons -->
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-end gap-3">
+                <a th:href="@{/teams}" class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition-all">
+                    Cancelar
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-600/30 transition-all hover:scale-[1.02] active:scale-95">
+                    <span th:text="${isEdit ? 'Actualizar Equipo' : 'Guardar Equipo'}">Guardar Equipo</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

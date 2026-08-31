@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::main-content}, ~{::title})}">
+<head>
+    <title>Encuentros y Fixture - ScoreCraft</title>
+</head>
+<body>
+<div th:fragment="main-content" class="space-y-6">
+
+    <!-- Header Section -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-extrabold text-white flex items-center gap-2.5">
+                <span>⚔️</span> Fixture & Resultados
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Programa partidos y registra los marcadores oficiales</p>
+        </div>
+        <a th:href="@{/matches/new}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-600/30 transition-all hover:scale-[1.02] active:scale-95">
+            <span>+ Programar Encuentro</span>
+        </a>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="bg-surface-900 border border-slate-800 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+        <!-- Status Filter Buttons -->
+        <div class="flex items-center gap-2">
+            <a th:href="@{/matches}"
+               th:classappend="${selectedStatus == null and selectedMatchDay == null} ? 'bg-brand-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
+               class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all">
+                Todos
+            </a>
+            <a th:href="@{/matches(status='SCHEDULED')}"
+               th:classappend="${selectedStatus == 'SCHEDULED'} ? 'bg-amber-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
+               class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all">
+                ⏳ Por Jugar
+            </a>
+            <a th:href="@{/matches(status='FINISHED')}"
+               th:classappend="${selectedStatus == 'FINISHED'} ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
+               class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all">
+                ✅ Finalizados
+            </a>
+        </div>
+
+        <!-- Match Day Filter Dropdown -->
+        <div class="flex items-center gap-2" th:if="${!matchDays.isEmpty()}">
+            <span class="text-xs text-slate-400 font-semibold">Jornada:</span>
+            <div class="flex items-center gap-1.5">
+                <a th:each="day : ${matchDays}"
+                   th:href="@{/matches(matchDay=${day})}"
+                   th:classappend="${selectedMatchDay == day} ? 'bg-emerald-500 text-slate-950 font-extrabold' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'"
+                   class="w-7 h-7 rounded-lg text-xs flex items-center justify-center font-mono font-bold transition-all"
+                   th:text="${day}">1</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Match Cards List -->
+    <div class="space-y-3">
+        <div th:each="m : ${matches}" class="bg-surface-900 border border-slate-800 rounded-2xl p-5 shadow-lg hover:border-slate-700 transition-all flex flex-col md:flex-row md:items-center justify-between gap-4">
+
+            <!-- Match Meta (Jornada & Date) -->
+            <div class="flex md:flex-col items-center md:items-start justify-between gap-1 text-xs text-slate-400 md:w-36">
+                <span class="font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/20 text-[11px]" th:text="'Jornada ' + ${m.matchDay}">Jornada 1</span>
+                <span class="font-mono text-[11px] text-slate-400" th:text="${#temporals.format(m.matchDate, 'dd/MM/yyyy HH:mm')}">20/10/2026 15:30</span>
+            </div>
+
+            <!-- Teams & Score Area -->
+            <div class="flex-1 flex items-center justify-center gap-4 sm:gap-8 max-w-xl mx-auto">
+                <!-- Home Team -->
+                <div class="flex-1 flex items-center justify-end gap-3 text-right">
+                    <span class="font-extrabold text-white text-sm sm:text-base truncate" th:text="${m.homeTeam.name}">Local</span>
+                    <img th:if="${m.homeTeam.logoUrl}" th:src="${m.homeTeam.logoUrl}" alt="Logo" class="w-8 h-8 object-contain rounded-full bg-slate-800 p-0.5 shrink-0" onerror="this.style.display='none'"/>
+                </div>
+
+                <!-- Score / Status Center Box -->
+                <div class="shrink-0 flex flex-col items-center">
+                    <div th:if="${m.status.name() == 'FINISHED'}" class="px-4 py-1.5 bg-slate-950 border border-slate-700 rounded-xl font-mono font-black text-lg text-white tracking-widest shadow-inner flex items-center gap-2">
+                        <span th:text="${m.homeScore}">0</span>
+                        <span class="text-slate-600">:</span>
+                        <span th:text="${m.awayScore}">0</span>
+                    </div>
+                    <div th:if="${m.status.name() == 'SCHEDULED'}" class="px-3 py-1 bg-amber-950/40 border border-amber-500/30 text-amber-400 rounded-lg text-xs font-extrabold uppercase tracking-wider">
+                        VS
+                    </div>
+                    <span class="text-[10px] mt-1 font-bold uppercase tracking-wider"
+                          th:classappend="${m.status.name() == 'FINISHED' ? 'text-emerald-400' : 'text-amber-400'}"
+                          th:text="${m.status.displayName}">Estado</span>
+                </div>
+
+                <!-- Away Team -->
+                <div class="flex-1 flex items-center justify-start gap-3 text-left">
+                    <img th:if="${m.awayTeam.logoUrl}" th:src="${m.awayTeam.logoUrl}" alt="Logo" class="w-8 h-8 object-contain rounded-full bg-slate-800 p-0.5 shrink-0" onerror="this.style.display='none'"/>
+                    <span class="font-extrabold text-white text-sm sm:text-base truncate" th:text="${m.awayTeam.name}">Visitante</span>
+                </div>
+            </div>
+
+            <!-- Actions Area -->
+            <div class="flex items-center justify-end gap-2 border-t md:border-t-0 pt-3 md:pt-0 border-slate-800/80">
+                <a th:href="@{/matches/{id}/result(id=${m.id})}"
+                   class="px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-500 text-white shadow-md shadow-brand-600/20 transition-all flex items-center gap-1">
+                    <span>⚽ Registrar Marcador</span>
+                </a>
+                <form th:action="@{/matches/{id}/delete(id=${m.id})}" method="post" onsubmit="return confirm('¿Eliminar este encuentro?');">
+                    <button type="submit" class="p-2 rounded-xl text-xs font-semibold text-rose-400 bg-slate-800 hover:bg-rose-950 hover:text-rose-200 transition-all" title="Eliminar encuentro">
+                        🗑️
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Empty State -->
+        <div th:if="${matches.isEmpty()}" class="bg-surface-900 border border-dashed border-slate-800 rounded-2xl p-12 text-center">
+            <span class="text-4xl">⚔️</span>
+            <h3 class="text-base font-bold text-white mt-3">No hay partidos para el filtro seleccionado</h3>
+            <p class="text-xs text-slate-400 mt-1">Programa un nuevo partido o limpia los filtros.</p>
+            <a th:href="@{/matches/new}" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold uppercase bg-brand-600 hover:bg-brand-500 text-white">
+                + Programar Partido
+            </a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

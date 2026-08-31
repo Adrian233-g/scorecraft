@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::main-content}, ~{::title})}">
+<head>
+    <title>Dashboard - ScoreCraft</title>
+</head>
+<body>
+<div th:fragment="main-content" class="space-y-8">
+
+    <!-- Top Hero Stats Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1: Total Equipos -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition-all">
+            <div class="absolute -right-2 -bottom-2 text-6xl opacity-5 select-none pointer-events-none group-hover:scale-110 transition-transform">🛡️</div>
+            <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Equipos en Torneo</span>
+            <div class="mt-2 flex items-baseline gap-2">
+                <span class="text-3xl font-extrabold text-white" th:text="${teamCount}">0</span>
+                <span class="text-xs font-semibold text-emerald-400">clubes</span>
+            </div>
+            <a th:href="@{/teams}" class="mt-3 inline-flex items-center text-xs font-semibold text-brand-500 hover:text-brand-400 gap-1">
+                Ver todos &rarr;
+            </a>
+        </div>
+
+        <!-- Card 2: Total Encuentros -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition-all">
+            <div class="absolute -right-2 -bottom-2 text-6xl opacity-5 select-none pointer-events-none group-hover:scale-110 transition-transform">⚔️</div>
+            <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Total Encuentros</span>
+            <div class="mt-2 flex items-baseline gap-2">
+                <span class="text-3xl font-extrabold text-white" th:text="${totalMatches}">0</span>
+                <span class="text-xs font-semibold text-slate-400">partidos</span>
+            </div>
+            <a th:href="@{/matches}" class="mt-3 inline-flex items-center text-xs font-semibold text-brand-500 hover:text-brand-400 gap-1">
+                Ver fixture &rarr;
+            </a>
+        </div>
+
+        <!-- Card 3: Partidos Jugados -->
+        <div class="bg-surface-900 border border-slate-800 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition-all">
+            <div class="absolute -right-2 -bottom-2 text-6xl opacity-5 select-none pointer-events-none group-hover:scale-110 transition-transform">🎯</div>
+            <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">Partidos Disputados</span>
+            <div class="mt-2 flex items-baseline gap-2">
+                <span class="text-3xl font-extrabold text-emerald-400" th:text="${finishedMatches}">0</span>
+                <span class="text-xs font-semibold text-slate-400" th:text="'de ' + ${totalMatches}">de 0</span>
+            </div>
+            <span class="mt-3 block text-xs font-medium text-slate-500">100% computados</span>
+        </div>
+
+        <!-- Card 4: Líder de la Tabla -->
+        <div class="bg-gradient-to-br from-surface-900 to-slate-900 border border-amber-500/30 rounded-2xl p-5 shadow-lg shadow-amber-950/20 relative overflow-hidden">
+            <div class="absolute top-3 right-3">
+                <span class="text-xl">👑</span>
+            </div>
+            <span class="text-xs font-bold tracking-wider text-amber-400 uppercase">Líder del Torneo</span>
+            <div class="mt-2" th:if="${!topStandings.isEmpty()}">
+                <div class="flex items-center gap-2.5">
+                    <img th:if="${topStandings[0].team.logoUrl}" th:src="${topStandings[0].team.logoUrl}"
+                         alt="Logo" class="w-8 h-8 object-contain rounded-full bg-slate-800 p-0.5"
+                         onerror="this.style.display='none'"/>
+                    <div>
+                        <div class="text-base font-extrabold text-white leading-snug" th:text="${topStandings[0].team.name}">Equipo</div>
+                        <div class="text-xs font-semibold text-amber-300" th:text="${topStandings[0].points} + ' pts (' + ${topStandings[0].goalDifference} + ' DG)'">0 pts</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2 text-sm text-slate-400" th:if="${topStandings.isEmpty()}">
+                Sin partidos disputados
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Grid: Top 5 Standings & Matches Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- Column 1: Top Standings (7 cols) -->
+        <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+                        <span>🏆</span> Top Posiciones
+                    </h2>
+                    <p class="text-xs text-slate-400">Primeros lugares calculados dinámicamente</p>
+                </div>
+                <a th:href="@{/standings}" class="text-xs font-bold text-emerald-400 hover:text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-lg transition-all">
+                    Tabla Completa &rarr;
+                </a>
+            </div>
+
+            <div class="bg-surface-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-900/80 text-[11px] uppercase tracking-wider text-slate-400 border-b border-slate-800">
+                        <tr>
+                            <th class="py-3 px-3.5 text-center w-12">#</th>
+                            <th class="py-3 px-3.5">Club</th>
+                            <th class="py-3 px-3 text-center">PJ</th>
+                            <th class="py-3 px-3 text-center">DG</th>
+                            <th class="py-3 px-3.5 text-center font-bold text-white">PTS</th>
+                            <th class="py-3 px-3.5 text-center">Forma</th>
+                        </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/60 text-slate-200">
+                        <tr th:each="row : ${topStandings}" class="hover:bg-slate-800/40 transition-colors">
+                            <td class="py-3 px-3.5 text-center font-mono font-bold text-xs">
+                                <span th:if="${row.position == 1}" class="w-6 h-6 inline-flex items-center justify-center rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">1</span>
+                                <span th:if="${row.position > 1 and row.position <= 3}" class="w-6 h-6 inline-flex items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" th:text="${row.position}">2</span>
+                                <span th:if="${row.position > 3}" class="text-slate-400" th:text="${row.position}">4</span>
+                            </td>
+                            <td class="py-3 px-3.5">
+                                <div class="flex items-center gap-2.5">
+                                    <img th:if="${row.team.logoUrl}" th:src="${row.team.logoUrl}" alt="Logo" class="w-6 h-6 object-contain rounded-full bg-slate-800 p-0.5" onerror="this.style.display='none'"/>
+                                    <div>
+                                        <span class="font-bold text-white text-sm block" th:text="${row.team.name}">Alianza Lima</span>
+                                        <span class="text-[11px] text-slate-400 block sm:hidden" th:text="${row.team.shortName}">ALI</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-3 text-center font-mono text-xs text-slate-300" th:text="${row.played}">0</td>
+                            <td class="py-3 px-3 text-center font-mono text-xs font-semibold"
+                                th:classappend="${row.goalDifference > 0 ? 'text-emerald-400' : (row.goalDifference < 0 ? 'text-rose-400' : 'text-slate-400')}"
+                                th:text="${(row.goalDifference > 0 ? '+' : '') + row.goalDifference}">0</td>
+                            <td class="py-3 px-3.5 text-center font-mono font-extrabold text-sm text-white bg-slate-800/30" th:text="${row.points}">0</td>
+                            <td class="py-3 px-3.5 text-center">
+                                <div class="flex items-center justify-center gap-1">
+                                    <span th:each="f : ${row.recentForm}"
+                                          th:classappend="${f == 'W' ? 'bg-emerald-600 text-white' : (f == 'D' ? 'bg-amber-600 text-white' : 'bg-rose-600 text-white')}"
+                                          class="w-4 h-4 rounded text-[9px] font-bold flex items-center justify-center"
+                                          th:text="${f == 'W' ? 'G' : (f == 'D' ? 'E' : 'P')}">G</span>
+                                    <span th:if="${row.recentForm.isEmpty()}" class="text-[10px] text-slate-500">-</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${topStandings.isEmpty()}">
+                            <td colspan="6" class="py-6 text-center text-xs text-slate-400">No hay equipos registrados o partidos calculados aún.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column 2: Recent Results & Upcoming Fixtures (5 cols) -->
+        <div class="lg:col-span-5 space-y-6">
+
+            <!-- Recent Results -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <span>🎯</span> Últimos Resultados
+                    </h3>
+                    <a th:href="@{/matches?status=FINISHED}" class="text-xs text-brand-400 hover:underline">Ver todos</a>
+                </div>
+
+                <div class="space-y-2.5">
+                    <div th:each="m : ${recentMatches}" class="bg-surface-900 border border-slate-800 rounded-xl p-3.5 shadow hover:border-slate-700 transition-all">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 mb-2">
+                            <span class="font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/20" th:text="'Jornada ' + ${m.matchDay}">Jornada 1</span>
+                            <span th:text="${#temporals.format(m.matchDate, 'dd/MM/yyyy HH:mm')}">Fecha</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <!-- Home Team -->
+                            <div class="flex items-center gap-2 flex-1">
+                                <img th:if="${m.homeTeam.logoUrl}" th:src="${m.homeTeam.logoUrl}" class="w-5 h-5 object-contain" onerror="this.style.display='none'"/>
+                                <span class="text-xs font-bold text-white truncate" th:text="${m.homeTeam.name}">Local</span>
+                            </div>
+                            <!-- Score -->
+                            <div class="px-3 py-1 bg-slate-950 border border-slate-800 rounded-lg font-mono font-extrabold text-sm text-white tracking-widest mx-2">
+                                <span th:text="${m.homeScore}">0</span> - <span th:text="${m.awayScore}">0</span>
+                            </div>
+                            <!-- Away Team -->
+                            <div class="flex items-center justify-end gap-2 flex-1 text-right">
+                                <span class="text-xs font-bold text-white truncate" th:text="${m.awayTeam.name}">Visitante</span>
+                                <img th:if="${m.awayTeam.logoUrl}" th:src="${m.awayTeam.logoUrl}" class="w-5 h-5 object-contain" onerror="this.style.display='none'"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${recentMatches.isEmpty()}" class="bg-surface-900/50 border border-dashed border-slate-800 rounded-xl p-4 text-center text-xs text-slate-500">
+                        No hay partidos finalizados aún.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Fixtures -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <span>⏳</span> Próximos Encuentros
+                    </h3>
+                    <a th:href="@{/matches?status=SCHEDULED}" class="text-xs text-brand-400 hover:underline">Ver fixture</a>
+                </div>
+
+                <div class="space-y-2.5">
+                    <div th:each="m : ${upcomingMatches}" class="bg-surface-900 border border-slate-800 rounded-xl p-3.5 shadow hover:border-slate-700 transition-all flex items-center justify-between">
+                        <div class="flex-1">
+                            <div class="text-[10px] uppercase font-bold text-slate-400 mb-1" th:text="'Jornada ' + ${m.matchDay} + ' • ' + ${#temporals.format(m.matchDate, 'dd/MM HH:mm')}">
+                                Jornada 2
+                            </div>
+                            <div class="text-xs font-bold text-white">
+                                <span th:text="${m.homeTeam.name}">Local</span> vs <span th:text="${m.awayTeam.name}">Visitante</span>
+                            </div>
+                        </div>
+                        <a th:href="@{/matches/{id}/result(id=${m.id})}" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-brand-600 hover:bg-brand-500 text-white shadow-sm transition-all whitespace-nowrap">
+                            Marcador &rarr;
+                        </a>
+                    </div>
+                    <div th:if="${upcomingMatches.isEmpty()}" class="bg-surface-900/50 border border-dashed border-slate-800 rounded-xl p-4 text-center text-xs text-slate-500">
+                        No hay partidos programados pendientes.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

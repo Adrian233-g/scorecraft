@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::main-content}, ~{::title})}">
+<head>
+    <title>Programar Encuentro - ScoreCraft</title>
+</head>
+<body>
+<div th:fragment="main-content" class="max-w-2xl mx-auto space-y-6">
+
+    <!-- Header Section -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-extrabold text-white flex items-center gap-2">
+                <span>⚔️</span> Programar Encuentro
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Configura el cruce entre dos clubes, fecha y jornada</p>
+        </div>
+        <a th:href="@{/matches}" class="text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 px-3 py-2 rounded-xl transition-all">
+            &larr; Volver al fixture
+        </a>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-surface-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-xl">
+        <form th:action="@{/matches/save}" th:object="${matchDto}" method="post" class="space-y-6">
+
+            <!-- Row 1: Home and Away Teams Select -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Equipo Local *</label>
+                    <select th:field="*{homeTeamId}"
+                            class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
+                        <option value="">-- Seleccionar Local --</option>
+                        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Alianza Lima</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('homeTeamId')}" th:errors="*{homeTeamId}" class="text-xs text-rose-400 mt-1"></p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Equipo Visitante *</label>
+                    <select th:field="*{awayTeamId}"
+                            class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
+                        <option value="">-- Seleccionar Visitante --</option>
+                        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Universitario</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('awayTeamId')}" th:errors="*{awayTeamId}" class="text-xs text-rose-400 mt-1"></p>
+                </div>
+            </div>
+
+            <!-- Row 2: Match Day & Date/Time -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Jornada / Fecha # *</label>
+                    <input type="number" min="1" max="100" th:field="*{matchDay}"
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm font-mono"/>
+                    <p th:if="${#fields.hasErrors('matchDay')}" th:errors="*{matchDay}" class="text-xs text-rose-400 mt-1"></p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Fecha y Hora *</label>
+                    <input type="datetime-local" th:field="*{matchDate}"
+                           class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"/>
+                    <p th:if="${#fields.hasErrors('matchDate')}" th:errors="*{matchDate}" class="text-xs text-rose-400 mt-1"></p>
+                </div>
+            </div>
+
+            <!-- Submit buttons -->
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-end gap-3">
+                <a th:href="@{/matches}" class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition-all">
+                    Cancelar
+                </a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-600/30 transition-all hover:scale-[1.02] active:scale-95">
+                    Programar Partido
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
