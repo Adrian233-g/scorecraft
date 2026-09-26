@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
+  <defs>
+    <filter id="shadowUni" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Garnet Ring -->
+  <circle cx="100" cy="100" r="92" fill="#8B1C28" filter="url(#shadowUni)"/>
+
+  <!-- Cream Inner Circle -->
+  <circle cx="100" cy="100" r="82" fill="#FFF9E6" stroke="#8B1C28" stroke-width="2"/>
+
+  <!-- Subtle inner concentric ring -->
+  <circle cx="100" cy="100" r="76" fill="none" stroke="#E6DEC5" stroke-width="1.5"/>
+
+  <!-- Classic Burgundy "U" Symbol -->
+  <path d="M 68 56 
+           L 84 56 
+           L 84 106 
+           C 84 122 91 130 100 130 
+           C 109 130 116 122 116 106 
+           L 116 56 
+           L 132 56 
+           L 132 106 
+           C 132 134 119 146 100 146 
+           C 81 146 68 134 68 106 
+           Z" 
+        fill="#8B1C28"/>
+</svg>

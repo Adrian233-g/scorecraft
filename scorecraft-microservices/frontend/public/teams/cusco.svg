@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
+  <defs>
+    <filter id="shadowCus" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.4"/>
+    </filter>
+    <linearGradient id="goldCus" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FCD34D"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA820A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Black Shield Base -->
+  <path d="M 25 35 
+           L 175 35 
+           C 175 140 160 195 100 225 
+           C 40 195 25 140 25 35 Z" 
+        fill="#141416" 
+        stroke="url(#goldCus)" 
+        stroke-width="6" 
+        filter="url(#shadowCus)"/>
+
+  <!-- Inner Gold Contour -->
+  <path d="M 33 43 
+           L 167 43 
+           C 167 135 154 186 100 215 
+           C 46 186 33 135 33 43 Z" 
+        fill="none" 
+        stroke="url(#goldCus)" 
+        stroke-width="2" 
+        opacity="0.7"/>
+
+  <!-- Top Title Banner -->
+  <text x="100" y="70" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="16" fill="url(#goldCus)" text-anchor="middle" letter-spacing="3">
+    CUSCO FC
+  </text>
+  <line x1="45" y1="80" x2="155" y2="80" stroke="url(#goldCus)" stroke-width="2"/>
+
+  <!-- Golden Inca Sun Motif in center -->
+  <circle cx="100" cy="135" r="26" fill="none" stroke="url(#goldCus)" stroke-width="3"/>
+  <circle cx="100" cy="135" r="16" fill="url(#goldCus)"/>
+  
+  <!-- Sun Rays (8 rays) -->
+  <g stroke="url(#goldCus)" stroke-width="3" stroke-linecap="round">
+    <line x1="100" y1="102" x2="100" y2="95"/>
+    <line x1="100" y1="168" x2="100" y2="175"/>
+    <line x1="67" y1="135" x2="60" y2="135"/>
+    <line x1="133" y1="135" x2="140" y2="135"/>
+    <line x1="77" y1="112" x2="72" y2="107"/>
+    <line x1="123" y1="158" x2="128" y2="163"/>
+    <line x1="77" y1="158" x2="72" y2="163"/>
+    <line x1="123" y1="112" x2="128" y2="107"/>
+  </g>
+
+  <!-- Bottom Year or Orgullo Dorado -->
+  <text x="100" y="198" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="10" fill="#E4E4E7" text-anchor="middle" letter-spacing="2">
+    PERÚ
+  </text>
+</svg>

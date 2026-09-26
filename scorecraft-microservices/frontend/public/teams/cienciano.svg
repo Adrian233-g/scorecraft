@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
+  <defs>
+    <filter id="shadowCie" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- 2 Gold Stars on top (Sudamericana 2003 & Recopa 2004) -->
+  <g fill="#F59E0B" stroke="#B45309" stroke-width="1">
+    <polygon points="75,18 79,29 90,29 81,36 84,47 75,40 66,47 69,36 60,29 71,29"/>
+    <polygon points="125,18 129,29 140,29 131,36 134,47 125,40 116,47 119,36 110,29 121,29"/>
+  </g>
+
+  <!-- Red Shield Body -->
+  <path d="M 25 55 
+           L 175 55 
+           C 175 140 158 198 100 228 
+           C 42 198 25 140 25 55 Z" 
+        fill="#C8102E" 
+        stroke="#FFFFFF" 
+        stroke-width="6" 
+        filter="url(#shadowCie)"/>
+
+  <!-- Top Blue Accent Header -->
+  <path d="M 30 60 L 170 60 L 170 88 L 30 88 Z" fill="#002B7F"/>
+  <text x="100" y="79" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="13" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">
+    CIENCIANO
+  </text>
+
+  <!-- Large Iconic White "C" in Center -->
+  <path d="M 135 110 
+           C 125 100 115 96 100 96 
+           C 78 96 64 112 64 138 
+           C 64 164 78 180 100 180 
+           C 115 180 125 176 135 166 
+           L 122 153 
+           C 116 160 110 163 100 163 
+           C 88 163 80 152 80 138 
+           C 80 124 88 113 100 113 
+           C 110 113 116 116 122 123 
+           Z" 
+        fill="#FFFFFF"/>
+
+  <!-- Gold Star in bottom center or year 1901 -->
+  <text x="100" y="208" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="11" fill="#F59E0B" text-anchor="middle" letter-spacing="1">
+    CUSCO 1901
+  </text>
+</svg>

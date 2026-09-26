@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00BAFF"/>
+      <stop offset="100%" stop-color="#0080C8"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- 3 Stars on top (Tricampeonato) -->
+  <g fill="url(#goldGrad)" stroke="#B45309" stroke-width="1.5">
+    <!-- Left star -->
+    <polygon points="45,28 49,38 60,38 51,45 54,56 45,49 36,56 39,45 30,38 41,38"/>
+    <!-- Center star (bigger) -->
+    <polygon points="100,12 105,25 119,25 108,34 112,47 100,39 88,47 92,34 81,25 95,25"/>
+    <!-- Right star -->
+    <polygon points="155,28 159,38 170,38 161,45 164,56 155,49 146,56 149,45 140,38 151,38"/>
+  </g>
+
+  <!-- Shield Base -->
+  <path d="M 25 65 
+           L 175 65 
+           C 175 140 160 195 100 230 
+           C 40 195 25 140 25 65 Z" 
+        fill="url(#skyGrad)" 
+        stroke="#FFFFFF" 
+        stroke-width="7" 
+        filter="url(#shadow)"/>
+  
+  <path d="M 33 72 
+           L 167 72 
+           C 167 136 153 186 100 219 
+           C 47 186 33 136 33 72 Z" 
+        fill="none" 
+        stroke="#FFFFFF" 
+        stroke-width="2.5" 
+        opacity="0.8"/>
+
+  <!-- Top Yellow Ribbon -->
+  <path d="M 32 72 L 168 72 L 168 98 L 32 98 Z" fill="url(#goldGrad)"/>
+  <text x="100" y="90" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="14" fill="#002B7F" text-anchor="middle" letter-spacing="2">
+    SPORTING CRISTAL
+  </text>
+
+  <!-- Monogram SC -->
+  <text x="78" y="165" font-family="'Trebuchet MS', Arial, sans-serif" font-weight="900" font-size="75" fill="#FFFFFF" text-anchor="middle" filter="url(#shadow)">
+    S
+  </text>
+  <text x="122" y="165" font-family="'Trebuchet MS', Arial, sans-serif" font-weight="900" font-size="75" fill="#FFFFFF" text-anchor="middle" filter="url(#shadow)">
+    C
+  </text>
+
+  <!-- Soccer Ball Accent in center bottom -->
+  <circle cx="100" cy="188" r="14" fill="#FFFFFF" stroke="#002B7F" stroke-width="2"/>
+  <polygon points="100,181 106,185 104,192 96,192 94,185" fill="#002B7F"/>
+</svg>

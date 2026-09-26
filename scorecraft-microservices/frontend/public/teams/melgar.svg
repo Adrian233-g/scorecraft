@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
+  <defs>
+    <filter id="shadowMel" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.35"/>
+    </filter>
+    <clipPath id="melgarClip">
+      <path d="M 25 35 
+               L 175 35 
+               C 175 135 158 195 100 225 
+               C 42 195 25 135 25 35 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer Border -->
+  <path d="M 23 33 
+           L 177 33 
+           C 177 137 160 197 100 228 
+           C 40 197 23 137 23 33 Z" 
+        fill="#111827" 
+        stroke="#FFFFFF" 
+        stroke-width="6" 
+        filter="url(#shadowMel)"/>
+
+  <!-- Inner Halves (Left Black, Right Red) -->
+  <g clip-path="url(#melgarClip)">
+    <rect x="0" y="0" width="100" height="240" fill="#111827"/>
+    <rect x="100" y="0" width="100" height="240" fill="#E30613"/>
+
+    <!-- Diagonal Sash or Central Badge -->
+    <path d="M 25 35 L 175 35 L 175 75 L 25 75 Z" fill="#111827" opacity="0.9"/>
+    <line x1="25" y1="75" x2="175" y2="75" stroke="#E30613" stroke-width="3"/>
+    
+    <text x="100" y="62" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="14" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">
+      FBC MELGAR
+    </text>
+
+    <!-- Center Football Ball -->
+    <circle cx="100" cy="140" r="32" fill="#FFFFFF" stroke="#111827" stroke-width="4"/>
+    <polygon points="100,126 112,135 108,148 92,148 88,135" fill="#111827"/>
+    <line x1="100" y1="126" x2="100" y2="108" stroke="#111827" stroke-width="3"/>
+    <line x1="112" y1="135" x2="128" y2="130" stroke="#111827" stroke-width="3"/>
+    <line x1="108" y1="148" x2="118" y2="166" stroke="#111827" stroke-width="3"/>
+    <line x1="92" y1="148" x2="82" y2="166" stroke="#111827" stroke-width="3"/>
+    <line x1="88" y1="135" x2="72" y2="130" stroke="#111827" stroke-width="3"/>
+
+    <!-- Stars (Campeonatos 1981, 2015) -->
+    <polygon points="70,188 73,195 81,195 75,200 77,208 70,203 63,208 65,200 59,195 67,195" fill="#F59E0B"/>
+    <polygon points="130,188 133,195 141,195 135,200 137,208 130,203 123,208 125,200 119,195 127,195" fill="#F59E0B"/>
+  </g>
+
+  <!-- Inner Trim -->
+  <path d="M 31 41 
+           L 169 41 
+           C 169 130 154 186 100 216 
+           C 46 186 31 130 31 41 Z" 
+        fill="none" 
+        stroke="#FFFFFF" 
+        stroke-width="2.5" 
+        opacity="0.8"/>
+</svg>

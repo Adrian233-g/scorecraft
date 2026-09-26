@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" width="100%" height="100%">
+  <defs>
+    <filter id="shadowAli" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.35"/>
+    </filter>
+    <clipPath id="shieldClip">
+      <path d="M 25 25 
+               L 175 25 
+               C 175 130 160 195 100 225 
+               C 40 195 25 130 25 25 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer Shield Border -->
+  <path d="M 23 23 
+           L 177 23 
+           C 177 131 162 197 100 228 
+           C 38 197 23 131 23 23 Z" 
+        fill="#001F5C" 
+        stroke="#FFFFFF" 
+        stroke-width="6" 
+        filter="url(#shadowAli)"/>
+
+  <!-- Inner Clipped Content (Stripes) -->
+  <g clip-path="url(#shieldClip)">
+    <!-- Base White -->
+    <rect x="0" y="0" width="200" height="240" fill="#FFFFFF"/>
+
+    <!-- Navy Stripes (3 Blue Stripes) -->
+    <rect x="25" y="80" width="30" height="160" fill="#001F5C"/>
+    <rect x="85" y="80" width="30" height="160" fill="#001F5C"/>
+    <rect x="145" y="80" width="30" height="160" fill="#001F5C"/>
+
+    <!-- Top White Header for Lima Crown / Stars -->
+    <rect x="0" y="0" width="200" height="80" fill="#FFFFFF"/>
+    <line x1="25" y1="80" x2="175" y2="80" stroke="#001F5C" stroke-width="4"/>
+
+    <!-- 3 Stars in top area -->
+    <g fill="#001F5C">
+      <!-- Left Star -->
+      <polygon points="55,42 58,49 66,49 60,54 62,62 55,57 48,62 50,54 44,49 52,49"/>
+      <!-- Center Star (Crown) -->
+      <polygon points="100,34 103,42 112,42 105,48 108,57 100,51 92,57 95,48 88,42 97,42"/>
+      <!-- Right Star -->
+      <polygon points="145,42 148,49 156,49 150,54 152,62 145,57 138,62 140,54 134,49 142,49"/>
+    </g>
+
+    <!-- ALIANZA LIMA banner text -->
+    <text x="100" y="72" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="10" fill="#001F5C" text-anchor="middle" letter-spacing="1">
+      ALIANZA LIMA
+    </text>
+  </g>
+
+  <!-- Inner Rim Contour -->
+  <path d="M 31 31 
+           L 169 31 
+           C 169 125 155 186 100 216 
+           C 45 186 31 125 31 31 Z" 
+        fill="none" 
+        stroke="#001F5C" 
+        stroke-width="3"/>
+</svg>

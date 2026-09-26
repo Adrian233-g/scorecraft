@@ -7,7 +7,7 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
   const [city, setCity] = useState('');
   const [stadium, setStadium] = useState('');
   const [logoUrl, setLogoUrl] = useState('');
-  const [primaryColor, setPrimaryColor] = useState('#3B82F6');
+  const [primaryColor, setPrimaryColor] = useState('#10B981');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -18,14 +18,14 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
       setCity(teamToEdit.city || '');
       setStadium(teamToEdit.stadium || '');
       setLogoUrl(teamToEdit.logoUrl || '');
-      setPrimaryColor(teamToEdit.primaryColor || '#3B82F6');
+      setPrimaryColor(teamToEdit.primaryColor || '#10B981');
     } else {
       setName('');
       setShortName('');
       setCity('');
       setStadium('');
       setLogoUrl('');
-      setPrimaryColor('#3B82F6');
+      setPrimaryColor('#10B981');
     }
     setError(null);
   }, [teamToEdit, isOpen]);
@@ -54,16 +54,16 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[#101623] border border-slate-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-800/80">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
               <Shield className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-lg font-black text-white">
+              <h3 className="text-base font-black text-white">
                 {teamToEdit ? 'Editar Club' : 'Registrar Nuevo Club'}
               </h3>
               <p className="text-xs text-slate-400">Datos institucionales y escudo oficial</p>
@@ -71,14 +71,14 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 rounded-xl bg-rose-950/80 border border-rose-500/40 text-rose-200 text-xs font-semibold">
+          <div className="mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold">
             {error}
           </div>
         )}
@@ -94,8 +94,8 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ej. Alianza Lima"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ej. Sporting Cristal"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
@@ -108,8 +108,8 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
                 required
                 value={shortName}
                 onChange={(e) => setShortName(e.target.value.toUpperCase())}
-                placeholder="ALI"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="CRI"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm font-mono uppercase focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 placeholder="Lima"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
@@ -135,8 +135,8 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
                 type="text"
                 value={stadium}
                 onChange={(e) => setStadium(e.target.value)}
-                placeholder="Alejandro Villanueva"
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Alberto Gallardo"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -151,19 +151,19 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
                 value={logoUrl}
                 onChange={(e) => setLogoUrl(e.target.value)}
                 placeholder="https://..."
-                className="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1">
-                Color
+                Color Principal
               </label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
                   value={primaryColor}
                   onChange={(e) => setPrimaryColor(e.target.value)}
-                  className="h-9 w-12 rounded-lg bg-slate-950 border border-slate-700 cursor-pointer"
+                  className="h-10 w-12 rounded-xl bg-slate-900 border border-slate-700 cursor-pointer"
                 />
                 <span className="text-xs text-slate-400 font-mono">{primaryColor}</span>
               </div>
@@ -171,18 +171,18 @@ export default function TeamModal({ isOpen, onClose, teamToEdit, onSave }) {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800/80">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition-all"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold uppercase text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 transition-all cursor-pointer"
             >
               Cancelar
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 cursor-pointer"
             >
               <Save className="w-4 h-4" />
               {loading ? 'Guardando...' : teamToEdit ? 'Actualizar Club' : 'Guardar Club'}

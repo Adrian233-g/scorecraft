@@ -1,97 +1,75 @@
 import React from 'react';
-import { LayoutDashboard, Trophy, Swords, Shield, Plus, Activity } from 'lucide-react';
+import { LayoutDashboard, Trophy, Swords, Shield, Plus } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab, onOpenNewMatch, onOpenNewTeam }) {
+  const navItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'standings', label: 'Tabla de Posiciones', icon: Trophy },
+    { id: 'matches', label: 'Fixture & Partidos', icon: Swords },
+    { id: 'teams', label: 'Equipos', icon: Shield },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <header className="sticky top-0 z-40 bg-[#0B0F19]/90 backdrop-blur-md border-b border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Brand Logo */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className="flex items-center gap-2.5 group text-left"
+              className="flex items-center gap-3 group text-left cursor-pointer focus:outline-none"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-200">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-all">
                 <span className="text-xl">⚽</span>
               </div>
               <div>
-                <span className="text-xl font-black tracking-tight text-white flex items-center gap-1">
+                <span className="text-lg font-black tracking-tight text-white flex items-center gap-1">
                   Score<span className="text-emerald-400">Craft</span>
                 </span>
-                <span className="block text-[10px] font-bold uppercase tracking-wider text-indigo-400">
-                  Microservicios + React SPA
+                <span className="block text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+                  Liga de Fútbol • Microservicios
                 </span>
               </div>
             </button>
           </div>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1.5">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                activeTab === 'dashboard'
-                  ? 'bg-slate-800 text-white shadow ring-1 ring-slate-700'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <LayoutDashboard className="w-4 h-4 text-indigo-400" />
-              Dashboard
-            </button>
-
-            <button
-              onClick={() => setActiveTab('standings')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                activeTab === 'standings'
-                  ? 'bg-slate-800 text-white shadow ring-1 ring-slate-700'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <Trophy className="w-4 h-4 text-amber-400" />
-              Tabla de Posiciones
-            </button>
-
-            <button
-              onClick={() => setActiveTab('matches')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                activeTab === 'matches'
-                  ? 'bg-slate-800 text-white shadow ring-1 ring-slate-700'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <Swords className="w-4 h-4 text-emerald-400" />
-              Fixture & Partidos
-            </button>
-
-            <button
-              onClick={() => setActiveTab('teams')}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                activeTab === 'teams'
-                  ? 'bg-slate-800 text-white shadow ring-1 ring-slate-700'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
-              <Shield className="w-4 h-4 text-blue-400" />
-              Equipos
-            </button>
+          <nav className="hidden md:flex items-center gap-1 bg-slate-900/80 p-1 rounded-2xl border border-slate-800/80">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    isActive
+                      ? 'bg-slate-800 text-white shadow-sm ring-1 ring-slate-700/60'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                  }`}
+                >
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                  {item.label}
+                </button>
+              );
+            })}
           </nav>
 
-          {/* Action Buttons & Status */}
-          <div className="flex items-center gap-2.5">
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2">
             <button
               onClick={onOpenNewMatch}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-md shadow-emerald-500/20 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Programar Partido</span>
             </button>
 
             <button
               onClick={onOpenNewTeam}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-slate-800 hover:bg-slate-700 text-emerald-400 border border-slate-700 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 hover:border-slate-600 transition-all hover:scale-[1.02] active:scale-95 cursor-pointer"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-3.5 h-3.5 text-slate-400" />
               <span>Nuevo Equipo</span>
             </button>
           </div>
